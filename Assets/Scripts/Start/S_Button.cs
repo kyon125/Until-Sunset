@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class S_Button : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject set;
     void Start()
     {
         
@@ -23,5 +24,10 @@ public class S_Button : MonoBehaviour
     public void p_end()
     {
         Application.Quit();
+    }
+
+    public void p_set()
+    {
+        Instantiate(set);
     }
 }
