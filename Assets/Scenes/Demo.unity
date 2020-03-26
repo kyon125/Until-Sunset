@@ -320,6 +320,8 @@ MonoBehaviour:
   p1: {fileID: 8670250428362890304, guid: fcd4fb3b8e01be34dbb2ded9a23d4740, type: 3}
   p2: {fileID: 990296063601204098, guid: 2239634801d7e5443b8162a97dfe9f72, type: 3}
   p3: {fileID: 347367847740139664, guid: 525a7a536fda1c3418d8b693752a43cb, type: 3}
+  t_select: {fileID: 1574935808918037625, guid: 7d9159e23e62716468d2a4f4d0d01c2a,
+    type: 3}
 --- !u!1 &660017083
 GameObject:
   m_ObjectHideFlags: 0

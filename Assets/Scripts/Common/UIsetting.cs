@@ -6,9 +6,9 @@ public class UIsetting : MonoBehaviour
 {
     // Start is called before the first frame update
     GameObject [] depot= new GameObject[3];
-    GameObject mid;
-    public GameObject p0, p1, p2, p3;
-    private int midnum;
+    GameObject mid,left,right, _t_select;
+    public GameObject p0, p1, p2, p3, t_select;
+    private int midnum,leftnum,rightnum;
     private bool depotopen = false;
     void Start()
     {
@@ -31,27 +31,40 @@ public class UIsetting : MonoBehaviour
         RectTransform rt = mid.GetComponent<RectTransform>();
         rt.anchoredPosition = new Vector3(0, 0, 0);
 
-        midnum = 0;
+        leftnum = 0;
+        midnum = 1;
+        rightnum = 2;
+    }
+    void create()
+    {
+        Destroy(mid);
+        Destroy(right);
+
+        right = Instantiate(depot[0], p0.transform);
+        left = Instantiate(depot[midnum - 1], p0.transform);
+        mid = Instantiate(depot[midnum], p0.transform);        
+
+        mid.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
+        right.GetComponent<RectTransform>().anchoredPosition = new Vector3(35, 0, 0);
     }
     void U_select()
-    {
+    {     
         if (depotopen == true)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow) && midnum < 2)
             {
-                Destroy(mid);
                 midnum++;
-                mid = Instantiate(depot[midnum], new Vector3(0, 0, 0), Quaternion.identity, p0.transform);
-                RectTransform rt = mid.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector3(0, 0, 0);
+                create();
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) && midnum == 2)
+            {
+                midnum = 0;
+                create();
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow) && midnum > 0)
             {
-                Destroy(mid);
                 midnum--;
-                mid = Instantiate(depot[midnum], new Vector3(0, 0, 0), Quaternion.identity, p0.transform);
-                RectTransform rt = mid.GetComponent<RectTransform>();
-                rt.anchoredPosition = new Vector3(0, 0, 0);
+                create();
             }
         }  
     }
@@ -60,11 +73,15 @@ public class UIsetting : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && depotopen == false)
         {
+            _t_select = Instantiate(t_select, p0.transform);
             depotopen = true;
         }
         else if(Input.GetKeyDown(KeyCode.E) && depotopen == true)
         {
-            depotopen = false;
+            Destroy(_t_select);
+            depotopen = false;            
         }
     }
+
+    
 }
