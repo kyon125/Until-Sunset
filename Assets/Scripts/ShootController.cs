@@ -7,17 +7,16 @@ public class ShootController : MonoBehaviour
 {
 
     public GameObject player; // 玩家
-    public float angle = 60f; // 角度
+    public static float angle = 60f; // 角度
     public GameObject bullet; // 子彈
     public Transform rayPic;
-    public Transform rayPic0;
     public float power = 500f;
+    public GameObject rayL;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        rayPic.eulerAngles = new Vector3(0, 0, angle);
-        rayPic0.eulerAngles = new Vector3(0, 0, angle);
+       rayPic.eulerAngles = new Vector3(0, 0, angle);       
     }
 
     // Update is called once per frame
@@ -30,8 +29,17 @@ public class ShootController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            rayL.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
             shoot(power);
         }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            rayL.SetActive(false);
+        }
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
             if (player)
@@ -45,7 +53,6 @@ public class ShootController : MonoBehaviour
                 angle = angle % 360;
             }
             rayPic.eulerAngles = new Vector3(0, 0, angle);
-            rayPic0.eulerAngles = new Vector3(0, 0, angle);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
@@ -60,14 +67,13 @@ public class ShootController : MonoBehaviour
                 angle = angle % 360;
             }
             rayPic.eulerAngles = new Vector3(0, 0, angle);
-            rayPic0.eulerAngles = new Vector3(0, 0, angle);
         }
     }
-
     private void shoot(float power)
     {
         GameObject _bullet = Instantiate(bullet, player.transform.position, Quaternion.identity) as GameObject;
         Vector2 forceDir = new Vector2(Mathf.Cos(Mathf.PI * angle / 180), Mathf.Sin(Mathf.PI * angle / 180));
         _bullet.GetComponent<Rigidbody2D>().AddForce(forceDir * power);
     }
+
 }

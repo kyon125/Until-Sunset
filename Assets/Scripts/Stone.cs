@@ -5,51 +5,33 @@ using UnityEngine;
 public class Stone : MonoBehaviour
 {
 
-    private bool isClick = false;
-    public Transform startPos;
-    public float maxDis = 1.5f;
-    private SpringJoint2D sp;
-    private Rigidbody2D rb;
+    public float power = 10;// 力量
+    public float angle; // 角度
+    public float Gravity = -10;// 重力加速度
 
-    private void Awake()
+
+    private Vector3 MoveSpeed;// 初速度向量
+    private Vector3 GritySpeed = Vector3.zero;// 重力的速度向量
+    private float dTime;// 時間
+    private Vector3 currentAngle;
+
+    void Start()
     {
-        sp = GetComponent<SpringJoint2D>();
-        rb = GetComponent<Rigidbody2D>();
-    }
+        // 載入外部全域參數
+        angle = ShootController.angle;
 
-    private void OnMouseDown()
+        // 初速度向量 = 角度 * 力量
+        MoveSpeed = Quaternion.Euler(new Vector3(0, 0, ShootController.angle)) * Vector3.right * power;
+        currentAngle = Vector3.zero;
+    }
+    void FixedUpdate()
     {
-        isClick = true;
-        rb.isKinematic = true;
+
+        // 重力速度 = at ;
+        GritySpeed.y = Gravity * (dTime += Time.fixedDeltaTime);
+        // 位移模擬軌跡
+        transform.position += (MoveSpeed + GritySpeed) * Time.fixedDeltaTime;
+        currentAngle.z = Mathf.Atan((MoveSpeed.y + GritySpeed.y) / MoveSpeed.x) * Mathf.Rad2Deg;
+        transform.eulerAngles = currentAngle;
     }
-
-    private void OnMouseUp()
-    {
-        isClick = false;
-        rb.isKinematic = false;
-        Invoke("fly", 0.1f);
-    }
-
-    private void Update()
-    {
-        if(isClick)
-        {
-            transform.position = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-            transform.position += new Vector3(0, 0, -Camera.main.transform.position.z);
-
-            if (Vector3.Distance(transform.position, startPos.position) > maxDis) // 長度限制 
-            {
-                Vector3 pos = (transform.position - startPos.position).normalized; // 單位化向量
-                pos *= maxDis; // 向量最大化
-                transform.position = pos + startPos.position;
-            }
-
-        }
-    }
-
-    void fly()
-    {
-        sp.enabled = false;
-    }
-       
 }

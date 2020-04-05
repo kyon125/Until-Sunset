@@ -508,11 +508,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6902289241466700458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16df1731dbd7fa14587bf0561eaede38, type: 3}
+  m_Script: {fileID: 11500000, guid: 569e17c0c69f75c4f92f83960313e87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pack: {fileID: 0}
-  ITEM: []
+  pack: {fileID: 6902289241466700458}
+  ITEM:
+  - {fileID: 3239644062725118052, guid: 20a79654ecf23b9438295eb0eb3542b4, type: 3}
+  - {fileID: 5418305068473412527, guid: 1b17101ff924f2048a1bcd286bb03860, type: 3}
 --- !u!1 &8136136147882231250
 GameObject:
   m_ObjectHideFlags: 0
