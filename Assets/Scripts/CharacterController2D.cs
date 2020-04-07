@@ -8,10 +8,10 @@ using DG.Tweening;
 public class CharacterController2D : MonoBehaviour
 {
 
-    private float speed = 0.5f;
+    public float speed = 0.5f;
     private Rigidbody2D Rigidbody;
     private Collider2D Collider; 
-    private float speed_X=3.0f;
+    public float speed_X=3.0f;
    
     public bool isGrounded;
     public LayerMask groundLaters;
@@ -19,16 +19,19 @@ public class CharacterController2D : MonoBehaviour
     public bool isHided;
     public LayerMask hideLayers;
 
+    /*----------------------------------------------------------------------------------------*/
+    private Backpacage Pack;
     void Start()
     {
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
+        Pack = this.gameObject.GetComponent<Backpacage>();
     }
 
     void Update()
     {
         // isground
-       isGrounded= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y -1.0f), new Vector2(transform.position.x + 0.3f, transform.position.y - 1.0f), groundLaters);
+       isGrounded= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y -1.0f), new Vector2(transform.position.x + 0.3f, transform.position.y - 1.1f), groundLaters);
 
         // ishide
         isHided= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y), new Vector2(transform.position.x + 0.3f, transform.position.y),hideLayers);
@@ -65,6 +68,24 @@ public class CharacterController2D : MonoBehaviour
         else if (Rigidbody.velocity.x < -speed_X)
         {
             Rigidbody.velocity = new Vector2(-speed_X, Rigidbody.velocity.y);
-        } 
-    } 
+        }
+
+        callpack();
+    }
+
+    void callpack()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Pack.open();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "item" && Input.GetKeyDown(KeyCode.C))
+        {
+            Destroy(collision.gameObject);
+            print("aaaaaa");
+        }            
+    }     
 }
