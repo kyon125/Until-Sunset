@@ -6,11 +6,10 @@ using System.IO;
 public class Backpacage : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject pack ;
+    public GameObject pack;
     public GameObject [] ITEM;
-    private GameObject Item;
     private itemval i_pack = new itemval();
-    string n_item;
+    public string n_item;
     void Start()
     {
         i_pack.id = new string[20];
@@ -38,32 +37,9 @@ public class Backpacage : MonoBehaviour
         //StreamWriter writer = new StreamWriter(System.IO.Path.Combine((Application.dataPath).ToString() + "/Json", "backpack.json"));
         //writer.Write(JSON);
         //writer.Close();
-    }
-    public void readitem()
-    {
-        packset();
-    }
-    public void getitem()
-    {
-        int random = Random.Range(0, 2);
-        switch (random)
-        {
-            case 0:
-                Item = Instantiate(ITEM[0], GameObject.Find("I0").transform);
-                select();
-                //print("紅藥水");
-                break;
-            case 1:
-                Item = Instantiate(ITEM[1], GameObject.Find("I0").transform);                             
-                select();
-                //print("藍藥水");
-                break;
-        }
-        save();
-    }
+    }    
     public void select()
-    {
-        n_item = Item.GetComponent<Itemset>().o_name;
+    {        
         print(n_item  + "haha");
         for (int i = 0; i <= i_pack.id.Length - 1; i++)
         {
@@ -90,8 +66,14 @@ public class Backpacage : MonoBehaviour
             }
         }
     }
-    void packset()
+    
+    public void close()
+    {       
+        Destroy(GameObject.FindWithTag("pack"));
+    }
+    public void open()
     {
+        Instantiate(pack);
         for (int i = 0; i <= i_pack.id.Length - 1; i++)
         {
             for (int a = 0; a <= ITEM.Length - 1; a++)
@@ -105,15 +87,7 @@ public class Backpacage : MonoBehaviour
             }
         }
     }
-    public void close()
-    {       
-        Destroy(this.gameObject);
-    }
-    public void open()
-    {
-        Instantiate(pack);
-    }
-    void save()
+    public void save()
     {
         string JSON = JsonUtility.ToJson(i_pack);
         StreamWriter writer = new StreamWriter(System.IO.Path.Combine((Application.dataPath).ToString() + "/Json", "backpack.json"));

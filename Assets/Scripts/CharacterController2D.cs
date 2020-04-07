@@ -21,6 +21,7 @@ public class CharacterController2D : MonoBehaviour
 
     /*----------------------------------------------------------------------------------------*/
     private Backpacage Pack;
+    private bool c_pack;
     void Start()
     {
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
@@ -75,17 +76,26 @@ public class CharacterController2D : MonoBehaviour
 
     void callpack()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && c_pack == false)
         {
+            c_pack = true;
             Pack.open();
+        }
+        else if (Input.GetKeyDown(KeyCode.Return) && c_pack == true)
+        {
+            c_pack = false;
+            Pack.close();
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "item" && Input.GetKeyDown(KeyCode.C))
         {
+            Pack.n_item = collision.gameObject.GetComponent<Itemset>().o_name;
+            Pack.select();
+            Pack.save();
             Destroy(collision.gameObject);
-            print("aaaaaa");
+            print(Pack.n_item);
         }            
     }     
 }
