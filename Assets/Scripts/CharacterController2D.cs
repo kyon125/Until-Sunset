@@ -38,7 +38,7 @@ public class CharacterController2D : MonoBehaviour
         isHided= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y), new Vector2(transform.position.x + 0.3f, transform.position.y),hideLayers);
 
 
-        if (Input.GetKey(KeyCode.RightArrow ) && isGrounded == true) 
+        if (Input.GetKey(KeyCode.RightArrow) && isGrounded == true)  
         {
             Rigidbody.AddForce(new Vector2(20 * speed, 0), ForceMode2D.Impulse);
         }

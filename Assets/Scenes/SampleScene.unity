@@ -165,7 +165,7 @@ MonoBehaviour:
   bullet: {fileID: 2531769295110872935, guid: c4c306971669b4e418783e2eea0d9e72, type: 3}
   rayPic: {fileID: 1624414902}
   power: 500
-  rayL: {fileID: 0}
+  rayL: {fileID: 1624414901}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -252,9 +252,9 @@ GameObject:
   - component: {fileID: 758911719}
   - component: {fileID: 758911718}
   - component: {fileID: 758911717}
-  - component: {fileID: 758911722}
   - component: {fileID: 758911723}
   - component: {fileID: 758911724}
+  - component: {fileID: 758911722}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -300,7 +300,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2072dfa59709dd4ab26d7cef1bc1a34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 0.5
   speed_X: 3
   isGrounded: 0
   groundLaters:
@@ -394,7 +394,7 @@ MonoBehaviour:
   isHided: 0
   hideLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
 --- !u!114 &758911723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +424,7 @@ MonoBehaviour:
   ITEM:
   - {fileID: 3239644062725118052, guid: 20a79654ecf23b9438295eb0eb3542b4, type: 3}
   - {fileID: 5418305068473412527, guid: 1b17101ff924f2048a1bcd286bb03860, type: 3}
+  n_item: 
 --- !u!1 &824157326
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +669,7 @@ GameObject:
   - component: {fileID: 1348163938}
   - component: {fileID: 1348163937}
   - component: {fileID: 1348163936}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -760,7 +761,7 @@ Transform:
   m_LocalScale: {x: 1.9421, y: 1.9421, z: 1.9421}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1624414901
 GameObject:
@@ -1420,6 +1421,7 @@ MonoBehaviour:
   ITEM:
   - {fileID: 3239644062725118052, guid: 20a79654ecf23b9438295eb0eb3542b4, type: 3}
   - {fileID: 5418305068473412527, guid: 1b17101ff924f2048a1bcd286bb03860, type: 3}
+  n_item: 
 --- !u!1001 &3564113793897325323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1465,7 +1467,7 @@ PrefabInstance:
     - target: {fileID: 1404414181718236261, guid: c4c306971669b4e418783e2eea0d9e72,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1404414181718236261, guid: c4c306971669b4e418783e2eea0d9e72,
         type: 3}

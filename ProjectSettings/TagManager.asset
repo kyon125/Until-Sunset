@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Setting
   - item
+  - pack
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - hideLaters
   - groundLaters
   - 
   - 
