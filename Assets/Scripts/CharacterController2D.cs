@@ -19,6 +19,9 @@ public class CharacterController2D : MonoBehaviour
     public bool isHided;
     public LayerMask hideLayers;
 
+    public Animator playerAni;
+    public Transform playerS;
+
     /*----------------------------------------------------------------------------------------*/
     private Backpacage Pack;
     private bool c_pack;
@@ -31,8 +34,11 @@ public class CharacterController2D : MonoBehaviour
 
     void Update()
     {
+
+        bool Run = false;
+
         // isground
-       isGrounded= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y -1.0f), new Vector2(transform.position.x + 0.3f, transform.position.y - -1.1f), groundLaters);
+        isGrounded = Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y -1.0f), new Vector2(transform.position.x + 0.3f, transform.position.y - -1.1f), groundLaters);
 
         // ishide
         isHided= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y), new Vector2(transform.position.x + 0.3f, transform.position.y),hideLayers);
@@ -40,6 +46,9 @@ public class CharacterController2D : MonoBehaviour
 
         if (Input.GetKey(KeyCode.RightArrow) && isGrounded == true)  
         {
+            playerS.localScale = new Vector2(0.1f, 0.1f);
+            Run = true;
+
             this.gameObject.transform.localScale = new Vector3(0.1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
             Rigidbody.AddForce(new Vector2(20 * speed, 0), ForceMode2D.Impulse);
         }
@@ -49,10 +58,25 @@ public class CharacterController2D : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.LeftArrow) && isGrounded == true)
         {
+            playerS.localScale = new Vector2(-0.1f, 0.1f);
+            Run = true;
+
             this.gameObject.transform.localScale = new Vector3(-0.1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
             Rigidbody.AddForce(new Vector2(-20 * speed, 0), ForceMode2D.Impulse);
         }
-        
+
+        if (Run)
+        {
+            if (playerAni.GetInteger("Run") == 0)
+                playerAni.SetInteger("Run", 1);
+        }
+        else
+        {
+            if (playerAni.GetInteger("Run") == 1)
+                playerAni.SetInteger("Run", 0);
+        }
+
+
         // Hide
         if (Input.GetKeyDown(KeyCode.DownArrow) && isHided == true)
         {

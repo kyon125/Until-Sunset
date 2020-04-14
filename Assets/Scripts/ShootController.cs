@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ShootController : MonoBehaviour
 {
 
-    public GameObject player; // 玩家
+    public GameObject slingshot; // 彈弓
     public static float angle = 60f; // 角度
     public GameObject bullet; // 子彈
     public Transform rayPic;
@@ -42,7 +42,7 @@ public class ShootController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            if (player)
+            if (slingshot)
             {
                 angle += 0.5f;
                 angle = angle % 360;
@@ -56,7 +56,7 @@ public class ShootController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            if (!player)
+            if (!slingshot)
             {
                 angle += 0.5f;
                 angle = angle % 360;
@@ -71,7 +71,7 @@ public class ShootController : MonoBehaviour
     }
     private void shoot(float power)
     {
-        GameObject _bullet = Instantiate(bullet, player.transform.position, Quaternion.identity) as GameObject;
+        GameObject _bullet = Instantiate(bullet, slingshot.transform.position, Quaternion.identity) as GameObject;
         Vector2 forceDir = new Vector2(Mathf.Cos(Mathf.PI * angle / 180), Mathf.Sin(Mathf.PI * angle / 180));
         _bullet.GetComponent<Rigidbody2D>().AddForce(forceDir * power);
     }
