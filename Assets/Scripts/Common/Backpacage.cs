@@ -12,14 +12,16 @@ public class Backpacage : MonoBehaviour
     private itemval i_pack = new itemval();
     public string n_item;
 
+    private GameObject [] u_item;
+    private int u_itemnum = 0;
     private bool selectopen = false;
     int n1, n2 = 0, n3;
     void Start()
     {
         i_pack.id = new string[20];
         i_pack.num = new int[20];
+        u_item = new GameObject[20];
         initial();
-        //U_select();
 
         string JSON = JsonUtility.ToJson(i_pack);
         Debug.Log(JSON);
@@ -28,7 +30,7 @@ public class Backpacage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //CU_select();
+        CU_select();
         d_cleanbag();
     }
 
@@ -114,43 +116,90 @@ public class Backpacage : MonoBehaviour
             Debug.Log(JsonUtility.ToJson(i_pack));
         }
     }
-    private void U_select()
-    {
-        for (int i = 0; i < ITEM.Length - 1; i++)
-        {
-            if (ITEM[i].name == i_pack.id[0])
-            {
-                Instantiate(ITEM[i], u2.transform);
-                break;
-            }
-        }
-    }
+    
     private void CU_select()
     {        
-        if (Input.GetKey(KeyCode.E) && selectopen == false)
+        if (Input.GetKeyDown(KeyCode.E) && selectopen == false)
         {
             selectopen = true;
+            U_intial();
         }
-        else if (Input.GetKey(KeyCode.E) && selectopen == true)
+        else if (Input.GetKeyDown(KeyCode.E) && selectopen == true)
         {
             selectopen = false;
         }
-
-        if (selectopen == true)
+        if (Input.GetKeyDown(KeyCode.RightArrow) && selectopen == true)
         {
-            if (Input.GetKey(KeyCode.RightArrow))
+            u_itemnum++;
+            if (u_item[u_itemnum] != null)
             {
-                n2++;
-                for (int i = 0; i < ITEM.Length; i++)
+                u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+                u_item[u_itemnum - 1].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                for (int a = 0; a < u_item.Length; a++)
                 {
-                    if (ITEM[i].name == i_pack.id[n2])
-                    {
-                        Instantiate(ITEM[i], u2.transform);
+                    if (u_item[a] == null)
                         break;
-                    }
+                    u_item[a].transform.position = new Vector3(u_item[a].transform.position.x - 80, u_item[a].transform.position.y, u_item[a].transform.position.z);
+                }
+            }
+            else if (u_item[u_itemnum] == null)
+            {
+                u_item[u_itemnum-1].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                for (int a = 0; a < u_item.Length; a++)
+                {
+                    if (u_item[a] == null)
+                        break;
+                    u_item[a].transform.position = new Vector3(u_item[a].transform.position.x + 80 * (u_itemnum-1), u_item[a].transform.position.y, u_item[a].transform.position.z);
+                }
+                u_itemnum = 0;
+                u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+            }            
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && selectopen == true)
+        {
+            u_itemnum--;
+            if (u_item[u_itemnum] != null)
+            {
+                u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+                u_item[u_itemnum + 1].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                for (int a = 0; a < u_item.Length; a++)
+                {
+                    if (u_item[a] == null)
+                        break;
+                    u_item[a].transform.position = new Vector3(u_item[a].transform.position.x + 80, u_item[a].transform.position.y, u_item[a].transform.position.z);
+                }
+            }
+            else if (u_item[u_itemnum] == null)
+            {
+                u_item[u_itemnum + 1].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                for (int a = 0; a < u_item.Length; a++)
+                {
+                    if (u_item[a] == null)
+                        break;
+                    u_item[a].transform.position = new Vector3(u_item[a].transform.position.x - 80 * (u_itemnum - 1), u_item[a].transform.position.y, u_item[a].transform.position.z);
+                }
+                u_itemnum = 0;
+                u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+            }
+        }
+    }
+    private void U_intial()
+    {
+        int a = 0, c = 0;
+        for (int i = 0; i < i_pack.id.Length; i++)
+        {
+            for (int b = 0; b < ITEM.Length; b++)
+            {
+                if (ITEM[b].name == i_pack.id[i])
+                {
+                    u_item[c] = Instantiate(ITEM[b], new Vector3(u2.transform.position.x + a, u2.transform.position.y, u2.transform.position.z), Quaternion.identity, u2.transform);
+                    c++;
+                    a = a + 80;
+                    break;
                 }
             }
         }
+        u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
     }
 }
 
