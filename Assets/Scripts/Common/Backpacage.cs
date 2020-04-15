@@ -11,12 +11,15 @@ public class Backpacage : MonoBehaviour
     public GameObject[] ITEM;
     private itemval i_pack = new itemval();
     public string n_item;
+
+    private bool selectopen = false;
+    int n1, n2 = 0, n3;
     void Start()
     {
         i_pack.id = new string[20];
         i_pack.num = new int[20];
         initial();
-        U_select();
+        //U_select();
 
         string JSON = JsonUtility.ToJson(i_pack);
         Debug.Log(JSON);
@@ -25,6 +28,7 @@ public class Backpacage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //CU_select();
         d_cleanbag();
     }
 
@@ -112,13 +116,41 @@ public class Backpacage : MonoBehaviour
     }
     private void U_select()
     {
-        u1.GetComponent<Image>().sprite = ITEM[0].GetComponent<Image>().sprite;
-        u1.GetComponent<Image>().sprite = ITEM[1].GetComponent<Image>().sprite;
-        u1.GetComponent<Image>().sprite = ITEM[2].GetComponent<Image>().sprite;
-        //for (int a = 0; a <= i_pack.id.Length-1; a++)
-        //{
+        for (int i = 0; i < ITEM.Length - 1; i++)
+        {
+            if (ITEM[i].name == i_pack.id[0])
+            {
+                Instantiate(ITEM[i], u2.transform);
+                break;
+            }
+        }
+    }
+    private void CU_select()
+    {        
+        if (Input.GetKey(KeyCode.E) && selectopen == false)
+        {
+            selectopen = true;
+        }
+        else if (Input.GetKey(KeyCode.E) && selectopen == true)
+        {
+            selectopen = false;
+        }
 
-        //}
+        if (selectopen == true)
+        {
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                n2++;
+                for (int i = 0; i < ITEM.Length; i++)
+                {
+                    if (ITEM[i].name == i_pack.id[n2])
+                    {
+                        Instantiate(ITEM[i], u2.transform);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 
