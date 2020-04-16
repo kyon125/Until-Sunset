@@ -158,7 +158,28 @@ public class Backpacage : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftArrow) && selectopen == true)
         {
             u_itemnum--;
-            if (u_item[u_itemnum] != null)
+            if (u_itemnum < 0)
+            {
+                for (int a = 0; a < u_item.Length; a++)
+                {
+                    if (u_item[a] == null)
+                    {
+                        u_itemnum = a - 1;
+                        break;
+                    }                    
+                }
+                for (int a = 0; a < u_item.Length; a++)
+                {
+                    if (u_item[a] == null)
+                    {
+                        break;
+                    }
+                    u_item[a].transform.position = new Vector3(u_item[a].transform.position.x - 80 * (u_itemnum), u_item[a].transform.position.y, u_item[a].transform.position.z);
+                }
+                u_item[0].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+                u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
+            }
+            else
             {
                 u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
                 u_item[u_itemnum + 1].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
@@ -168,18 +189,6 @@ public class Backpacage : MonoBehaviour
                         break;
                     u_item[a].transform.position = new Vector3(u_item[a].transform.position.x + 80, u_item[a].transform.position.y, u_item[a].transform.position.z);
                 }
-            }
-            else if (u_item[u_itemnum] == null)
-            {
-                u_item[u_itemnum + 1].GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
-                for (int a = 0; a < u_item.Length; a++)
-                {
-                    if (u_item[a] == null)
-                        break;
-                    u_item[a].transform.position = new Vector3(u_item[a].transform.position.x - 80 * (u_itemnum - 1), u_item[a].transform.position.y, u_item[a].transform.position.z);
-                }
-                u_itemnum = 0;
-                u_item[u_itemnum].GetComponent<RectTransform>().sizeDelta = new Vector2(80, 80);
             }
         }
     }
