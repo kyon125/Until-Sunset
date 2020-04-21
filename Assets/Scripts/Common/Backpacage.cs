@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 
@@ -9,7 +10,7 @@ public class Backpacage : MonoBehaviour
     // Start is called before the first frame update
     public GameObject pack,u1,u2,u3;
     public GameObject[] ITEM;
-    private itemval i_pack = new itemval();
+    public itemval i_pack = new itemval();
     public string n_item;
 
     private GameObject [] u_item;
@@ -30,8 +31,8 @@ public class Backpacage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CU_select();
-        d_cleanbag();
+        //CU_select();
+        //d_cleanbag();
     }
 
     void initial()

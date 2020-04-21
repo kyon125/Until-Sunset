@@ -29,7 +29,7 @@ public class CharacterController2D : MonoBehaviour
     {
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
-        Pack = GameObject.Find("Contollner").GetComponent<Backpacage>();
+        Pack = GameObject.Find("Contoller").GetComponent<Backpacage>();
     }
 
     void Update()
