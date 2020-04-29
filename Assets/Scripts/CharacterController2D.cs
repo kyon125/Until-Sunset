@@ -8,11 +8,11 @@ using DG.Tweening;
 public class CharacterController2D : MonoBehaviour
 {
 
-    public float speed , jumpspeed;
+    public float speed, jumpspeed;
     private Rigidbody2D Rigidbody;
-    private Collider2D Collider; 
+    private Collider2D Collider;
     public float speed_X;
-   
+
     public bool isGrounded;
     public LayerMask groundLaters;
 
@@ -22,6 +22,8 @@ public class CharacterController2D : MonoBehaviour
     public Animator playerAni;
     public Transform playerS;
 
+    bool CrouchDown = false;
+
     /*----------------------------------------------------------------------------------------*/
     private Backpacage Pack;
     private bool c_pack;
@@ -30,52 +32,50 @@ public class CharacterController2D : MonoBehaviour
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
         Pack = GameObject.Find("Contoller").GetComponent<Backpacage>();
+        playerAni = GetComponent<Animator>();
     }
 
     void Update()
     {
+        bool Walk = false;
+        CrouchDown = false;
 
-        bool Run = false;
-
-        // isground
-        isGrounded = Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y -1.0f), new Vector2(transform.position.x + 0.3f, transform.position.y - -1.1f), groundLaters);
+       // isground
+       isGrounded = Physics2D.OverlapArea(new Vector2(transform.position.x - 0.3f, transform.position.y - 1.0f), new Vector2(transform.position.x + 0.3f, transform.position.y - -1.1f), groundLaters);
 
         // ishide
-        isHided= Physics2D.OverlapArea(new Vector2(transform.position.x -0.3f, transform.position.y), new Vector2(transform.position.x + 0.3f, transform.position.y),hideLayers);
+        isHided = Physics2D.OverlapArea(new Vector2(transform.position.x - 0.3f, transform.position.y), new Vector2(transform.position.x + 0.3f, transform.position.y), hideLayers);
 
 
-        if (Input.GetKey(KeyCode.RightArrow) && isGrounded == true)  
+        if (Input.GetKey(KeyCode.RightArrow) && isGrounded == true)
         {
+            Walk = true;
+
             playerS.localScale = new Vector2(0.1f, 0.1f);
-            Run = true;
 
             this.gameObject.transform.localScale = new Vector3(0.1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
             Rigidbody.AddForce(new Vector2(20 * speed, 0), ForceMode2D.Impulse);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
-        {
-            Rigidbody.AddForce(new Vector2(0, jumpspeed), ForceMode2D.Impulse);
-        }
         else if (Input.GetKey(KeyCode.LeftArrow) && isGrounded == true)
         {
+            Walk = true;
+
             playerS.localScale = new Vector2(-0.1f, 0.1f);
-            Run = true;
 
             this.gameObject.transform.localScale = new Vector3(-0.1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
             Rigidbody.AddForce(new Vector2(-20 * speed, 0), ForceMode2D.Impulse);
-        }
+        }     
 
-        if (Run)
+        if (Walk)
         {
-            if (playerAni.GetInteger("Run") == 0)
-                playerAni.SetInteger("Run", 1);
+            if (playerAni.GetInteger("Walk") == 0)
+                playerAni.SetInteger("Walk", 1);
         }
         else
         {
-            if (playerAni.GetInteger("Run") == 1)
-                playerAni.SetInteger("Run", 0);
+            if (playerAni.GetInteger("Walk") == 1)
+                playerAni.SetInteger("Walk", 0);
         }
-
 
         // Hide
         if (Input.GetKeyDown(KeyCode.DownArrow) && isHided == true)
@@ -97,16 +97,78 @@ public class CharacterController2D : MonoBehaviour
             Rigidbody.velocity = new Vector2(-speed_X, Rigidbody.velocity.y);
         }
         run();
+        jump();
         unhitch();
         callpack();
+        crouchDown();
     }
     void run()
     {
+        bool Run = false;
+
         if (Input.GetKey(KeyCode.LeftShift))
+        {
             speed_X = 12;
+            Run = true;
+        }
         else
+        {
             speed_X = 8;
+        }
+
+        if (Run)
+        {
+            if (playerAni.GetInteger("Run") == 0)
+                playerAni.SetInteger("Run", 1);
+        }
+        else
+        {
+            if (playerAni.GetInteger("Run") == 1)
+                playerAni.SetInteger("Run", 0);
+        }
     }
+    void jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
+        {
+            playerAni.SetBool("JumpUp", true);
+            Rigidbody.AddForce(new Vector2(0, jumpspeed), ForceMode2D.Impulse);
+        }
+        else
+        {
+            playerAni.SetBool("JumpUp", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.RightArrow) && isGrounded == true)
+        {
+            playerAni.SetBool("Jump", true);
+        }
+        else
+        {
+            playerAni.SetBool("Jump", false);
+        }
+
+    }
+
+    void crouchDown()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            CrouchDown = true;
+        }
+
+        if (CrouchDown)
+        {
+            if (playerAni.GetInteger(" CrouchDown") == 0)
+                playerAni.SetInteger(" CrouchDown", 1);
+        }
+        else
+        {
+            if (playerAni.GetInteger(" CrouchDown") == 1)
+                playerAni.SetInteger(" CrouchDown", 0);
+        }
+    }
+
     void callpack()
     {
         if (Input.GetKeyDown(KeyCode.Return) && c_pack == false)
