@@ -19,7 +19,7 @@ public class S_Button : MonoBehaviour
     }
     public void p_start()
     {
-        SceneManager.LoadScene("Demo");
+        SceneManager.LoadScene("Well_01");
     }
     public void p_end()
     {

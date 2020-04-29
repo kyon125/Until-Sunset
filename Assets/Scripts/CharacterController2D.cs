@@ -96,10 +96,17 @@ public class CharacterController2D : MonoBehaviour
         {
             Rigidbody.velocity = new Vector2(-speed_X, Rigidbody.velocity.y);
         }
+        run();
         unhitch();
         callpack();
     }
-
+    void run()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+            speed_X = 12;
+        else
+            speed_X = 8;
+    }
     void callpack()
     {
         if (Input.GetKeyDown(KeyCode.Return) && c_pack == false)
