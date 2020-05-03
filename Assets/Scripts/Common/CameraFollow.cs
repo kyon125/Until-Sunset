@@ -27,7 +27,7 @@ public class CameraFollow : MonoBehaviour
     }
     void cameraX()
     {
-        print(_distanceX);
+        //print(_distanceX);
         _distanceX = f_camera.transform.position.x - player.transform.position.x;
         if (_distanceX <= distanceXA)
         {
