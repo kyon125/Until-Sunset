@@ -142,10 +142,17 @@ public class CharacterController2D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.RightArrow) && isGrounded == true)
         {
             playerAni.SetBool("Jump", true);
+            speed_X = 0f;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.LeftArrow) && isGrounded == true)
+        {
+            playerAni.SetBool("Jump", true);
+            speed_X = 0f;
         }
         else
         {
             playerAni.SetBool("Jump", false);
+            speed_X = 8.0f;
         }
 
     }
@@ -155,6 +162,7 @@ public class CharacterController2D : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             CrouchDown = true;
+            speed_X = 0f;
         }
 
         if (CrouchDown)
@@ -166,6 +174,7 @@ public class CharacterController2D : MonoBehaviour
         {
             if (playerAni.GetInteger(" CrouchDown") == 1)
                 playerAni.SetInteger(" CrouchDown", 0);
+            speed_X = 8.0f;
         }
     }
 
