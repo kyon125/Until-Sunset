@@ -19,7 +19,7 @@ public class SceneChange : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (loadname != "")
+        if (loadname != "" && collision.tag =="player")
             loadscene();
     }
     void loadscene()

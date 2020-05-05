@@ -7,7 +7,6 @@ public class UIsetting : MonoBehaviour
 {
     // Start is called before the first frame update\
     private string[] packid = new string[20];
-    private Backpacage bag;
     public GameObject center;
 
     private bool depotopen = false;

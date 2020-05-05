@@ -24,13 +24,11 @@ public class CharacterController2D : MonoBehaviour
 
     bool CrouchDown = false;
     /*----------------------------------------------------------------------------------------*/
-    private Backpacage Pack;
     public bool c_pack = false;
     void Start()
     {
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
-        Pack = GameObject.Find("Contoller").GetComponent<Backpacage>();
         playerAni = GetComponent<Animator>();
     }
 

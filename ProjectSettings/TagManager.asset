@@ -7,6 +7,7 @@ TagManager:
   - Setting
   - item
   - pack
+  - I_Potion
   layers:
   - Default
   - TransparentFX
