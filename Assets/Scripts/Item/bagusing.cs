@@ -14,17 +14,19 @@ public class bagusing : MonoBehaviour
     string n_tag ;
     void Start()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<PlayerBag>();        
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerBag>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        game = GameObject.FindWithTag("Player").GetComponent<PlayerBag>().game;
+        
     }
     public void useitem()
     {
-        if (game == gamstatus.onbaging)
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
+        if (gameStatus.status == GameStatus.Status.onBaging)
         {
             n_tag = this.gameObject.tag;
             switch (n_tag)
@@ -45,7 +47,7 @@ public class bagusing : MonoBehaviour
 
             }
         }
-        else if (game == gamstatus.oncompositing)
+        else if (gameStatus.status == GameStatus.Status.onComposition)
         {
             int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<I_Potion>().o_name);
             foreach (GameObject s in player.itemdata)
@@ -68,18 +70,19 @@ public class bagusing : MonoBehaviour
     }
     public void close()
     {
-        switch (game)
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
+        switch (gameStatus.status)
         {
-            case gamstatus.onbaging:
+            case GameStatus.Status.onBaging:
                 {
                     Destroy(GameObject.Find("P_pack"));
-                    player.game = gamstatus.onplaying;                    
+                    gameStatus.status = GameStatus.Status.onPlaying;                    
                     break;
                 }
-            case gamstatus.oncompositing:
+            case GameStatus.Status.onComposition:
                 {
                     player.comitem.Clear();
-                    player.game = gamstatus.onbaging;
+                    gameStatus.status = GameStatus.Status.onBaging;
                     Destroy(GameObject.Find("P_com"));
                     break;
                 }
@@ -87,16 +90,16 @@ public class bagusing : MonoBehaviour
     }
     public void B_composite()
     {        
-        switch (game)
+        switch (gameStatus.status)
         {
-            case gamstatus.onbaging:
+            case GameStatus.Status.onBaging:
                 {
-                    player.game = gamstatus.oncompositing;
+                    gameStatus.status = GameStatus.Status.onComposition;
                     Instantiate(com).name = "P_com";
-                    print(game);
+                    print(gameStatus.status);
                     break;
                 }
-            case gamstatus.oncompositing:
+            case GameStatus.Status.onComposition:
                 {
                     break;
                 }
