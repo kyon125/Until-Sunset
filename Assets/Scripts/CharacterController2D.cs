@@ -24,17 +24,19 @@ public class CharacterController2D : MonoBehaviour
 
     bool CrouchDown = false;
     /*----------------------------------------------------------------------------------------*/
-    public bool c_pack = false;
+    private GameStatus gameStatus;
     void Start()
     {
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
         playerAni = GetComponent<Animator>();
+
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
     }
 
     void Update()
     {
-        if (c_pack == false)
+        if (gameStatus.status == GameStatus.Status.onPlaying)
         {
             bool Walk = false;
             CrouchDown = false;

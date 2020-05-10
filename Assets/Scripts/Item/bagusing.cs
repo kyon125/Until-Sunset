@@ -9,11 +9,11 @@ public class bagusing : MonoBehaviour
 {
     // Start is called before the first frame update
     PlayerBag player;
-    public GameObject com;    
-    private gamstatus game;
+    public GameObject com;
+    private GameStatus gameStatus;
     string n_tag ;
     void Start()
-    {        
+    {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerBag>();        
     }
 

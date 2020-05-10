@@ -10,11 +10,11 @@ public class PlayerBag : MonoBehaviour
     public List<GameObject> comitem;
     string _itemname;
     private GameObject tsf;    
-    public gamstatus game;
+    private GameStatus gameStatus;
     // Start is called before the first frame update
     void Start()
     {
-        game = gamstatus.onplaying;
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
         bg.I_name = new List<string>();
         bg.I_num = new List<int>();
         comitem = new List<GameObject>();
@@ -27,19 +27,17 @@ public class PlayerBag : MonoBehaviour
     }
     protected void callpack()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && game == gamstatus.onplaying)
-        {
-            this.gameObject.GetComponent<CharacterController2D>().c_pack = true;
-            game = gamstatus.onbaging;
+        if (Input.GetKeyDown(KeyCode.Return) && gameStatus.status == GameStatus.Status.onPlaying)
+        {            
+            gameStatus.status = GameStatus.Status.onBaging;
 
             Instantiate(pack).name = "P_pack";
             tsf = GameObject.Find("itemcreat");
             creatitem();
         }
-        else if (Input.GetKeyDown(KeyCode.Return) && game == gamstatus.onbaging)
+        else if (Input.GetKeyDown(KeyCode.Return) && gameStatus.status == GameStatus.Status.onBaging)
         {
-            this.gameObject.GetComponent<CharacterController2D>().c_pack = false;
-            game = gamstatus.onplaying;
+            gameStatus.status = GameStatus.Status.onPlaying;
 
             Destroy(GameObject.Find("P_pack"));
         }
@@ -96,9 +94,4 @@ public class it_val
 {
     public string name;
 }
-public enum gamstatus
-{
-    onplaying,
-    onbaging,
-    oncompositing
-}
+
