@@ -89,7 +89,8 @@ public class bagusing : MonoBehaviour
         }
     }
     public void B_composite()
-    {        
+    {
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
         switch (gameStatus.status)
         {
             case GameStatus.Status.onBaging:

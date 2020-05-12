@@ -23,10 +23,10 @@ public class testitem : MonoBehaviour
             item.Add(i);
         }
 
-        foreach (Itemclass p in item)
-        {
-            Debug.Log(p.id);
-        }
+        //foreach (Itemclass p in item)
+        //{
+        //    Debug.Log(p.id);
+        //}
     }
 
     // Update is called once per frame

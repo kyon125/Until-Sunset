@@ -1,13 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlotController : MonoBehaviour
 {
     // Start is called before the first frame update
     List<Plotclass> plot = new List<Plotclass>();
+    public float playspeed;
+    public int start, end;
+    public string plotname;
+
+    private GameStatus gameStatus;
+    private Text text;
     void Start()
     {
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
+        text = GameObject.Find("DialogBox").GetComponent<Text>();
         initial();
     }
 
@@ -19,7 +28,7 @@ public class PlotController : MonoBehaviour
 
     void initial()
     {
-        TextAsset data = Resources.Load<TextAsset>("plot");
+        TextAsset data = Resources.Load<TextAsset>(plotname);
 
         string [] p = data.text.Split(new char[] { '\n' });
 
@@ -35,4 +44,24 @@ public class PlotController : MonoBehaviour
             plot.Add(step);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {        
+        if (collision.tag == "Player" && gameStatus.status != GameStatus.Status.onPloting)
+        {         
+            gameStatus.status = GameStatus.Status.onPloting;
+            StartCoroutine(playplot());
+        }
+    }
+    IEnumerator playplot()
+    {
+        for (int a = start; a <= end ; a++)
+        {
+            text.text = plot[a].content;
+            yield return new WaitForSeconds(playspeed);
+        }
+        text.text = "";
+        gameStatus.status = GameStatus.Status.onPlaying;
+        Destroy(this.gameObject);
+    }
 }
+
