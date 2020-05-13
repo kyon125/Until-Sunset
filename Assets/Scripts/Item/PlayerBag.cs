@@ -18,6 +18,8 @@ public class PlayerBag : MonoBehaviour
         bg.I_name = new List<string>();
         bg.I_num = new List<int>();
         comitem = new List<GameObject>();
+
+        de_item();
     }
 
     // Update is called once per frame
@@ -76,12 +78,18 @@ public class PlayerBag : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (Input.GetKeyDown(KeyCode.C) && other.tag == "I_Potion")
+        if (Input.GetKeyDown(KeyCode.C) && other.tag =="item")
         {
-            _itemname = other.GetComponent<I_Potion>().o_name;
+            _itemname = other.GetComponent<Itemset>().o_name;
             selected();
             Destroy(other.gameObject);
         }
+    }
+
+    private void de_item()
+    {
+        bg.I_name.Add("打火石");
+        bg.I_num.Add(1);
     }
 }
 

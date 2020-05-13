@@ -44,23 +44,35 @@ public class bagusing : MonoBehaviour
                         }
                         break;
                     }
-
             }
         }
         else if (gameStatus.status == GameStatus.Status.onComposition)
         {
-            int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<I_Potion>().o_name);
+            //int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<I_Potion>().o_name);
+            //foreach (GameObject s in player.itemdata)
+            //{
+            //    if (s.name == this.gameObject.GetComponent<I_Potion>().o_name)
+            //    {
+            //        if (player.comitem.Count < 2)
+            //        {
+            //            player.comitem.Add(s);
+            //            Instantiate(s, GameObject.Find("ct").transform);
+            //            break;
+            //        }                    
+            //    }                
+            //}
+            int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<Itemset>().o_name);
             foreach (GameObject s in player.itemdata)
             {
-                if (s.name == this.gameObject.GetComponent<I_Potion>().o_name)
+                if (s.name == this.gameObject.GetComponent<Itemset>().o_name)
                 {
                     if (player.comitem.Count < 2)
                     {
                         player.comitem.Add(s);
                         Instantiate(s, GameObject.Find("ct").transform);
                         break;
-                    }                    
-                }                
+                    }
+                }
             }
         }
         else

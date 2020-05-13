@@ -60,11 +60,11 @@ public class WellPlot1 : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         GameObject an = GameObject.FindWithTag("Player");
-        an.transform.GetComponent<Animator>().SetInteger("Walk", 1);
-        Tween tw = an.transform.DOMove(new Vector2(73.2F, -9.9F), 2.5f);
+        an.transform.GetChild(0).GetComponent<Animator>().SetInteger("Walk", 1);
+        Tween tw = an.transform.DOMoveX(77.9F, 2.5f);
 
         yield return new WaitForSeconds(2.5f);
-        an.transform.GetComponent<Animator>().SetInteger("Walk", 0);
+        an.transform.GetChild(0).GetComponent<Animator>().SetInteger("Walk", 0);
 
         for (int a = start; a <= end; a++)
         {
@@ -81,6 +81,7 @@ public class WellPlot1 : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
         contentext.text = "";
+        GameObject.Find("shine").GetComponent<SpriteRenderer>().enabled = true;
         gameStatus.status = GameStatus.Status.onPlaying;
         Destroy(this.gameObject);
     }
