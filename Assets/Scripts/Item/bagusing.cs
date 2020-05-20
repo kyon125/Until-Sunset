@@ -11,7 +11,6 @@ public class bagusing : MonoBehaviour
     PlayerBag player;
     public GameObject com;
     private GameStatus gameStatus;
-    string n_tag ;
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerBag>();
@@ -21,63 +20,44 @@ public class bagusing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 0; i <= player.bg.I_num.Count - 1; i++)
+        {
+            print(player.bg.I_item[i].show_name +  player.bg.I_num[i]);
+        }
     }
     public void useitem()
     {
         gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
         if (gameStatus.status == GameStatus.Status.onBaging)
         {
-            n_tag = this.gameObject.tag;
-            switch (n_tag)
+            int num = this.gameObject.GetComponent<Itemset>().Item_id;
+            switch (num)
             {
-                case "I_Potion":
-                    {
-                        int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<I_Potion>().o_name);
-                        player.bg.I_num[num]--;
-                        print(player.bg.I_num[num]);
-                        if (player.bg.I_num[num] == 0)
-                        {
-                            Destroy(this.gameObject);
-                            player.bg.I_name.RemoveAt(num);
-                            player.bg.I_num.RemoveAt(num);
-                        }
-                        break;
-                    }
+                case (3):
+                    print("ggg");
+                    GameObject lil = Instantiate(Resources.Load<GameObject>("simple_fire") , GameObject.Find("An").transform);
+                    break;
             }
         }
         else if (gameStatus.status == GameStatus.Status.onComposition)
         {
-            //int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<I_Potion>().o_name);
-            //foreach (GameObject s in player.itemdata)
-            //{
-            //    if (s.name == this.gameObject.GetComponent<I_Potion>().o_name)
-            //    {
-            //        if (player.comitem.Count < 2)
-            //        {
-            //            player.comitem.Add(s);
-            //            Instantiate(s, GameObject.Find("ct").transform);
-            //            break;
-            //        }                    
-            //    }                
-            //}
-            int num = player.bg.I_name.IndexOf(this.gameObject.GetComponent<Itemset>().o_name);
-            foreach (GameObject s in player.itemdata)
+            int num = this.gameObject.GetComponent<Itemset>().Item_id;
+            if (player.comitem.Count < 2)
             {
-                if (s.name == this.gameObject.GetComponent<Itemset>().o_name)
-                {
-                    if (player.comitem.Count < 2)
-                    {
-                        player.comitem.Add(s);
-                        Instantiate(s, GameObject.Find("ct").transform);
-                        break;
-                    }
-                }
+                player.comitem.Add(Itemdateset.itemdate[num]);
+
+                GameObject item = Instantiate(player.itemsource, GameObject.Find("ct").transform);
+
+                Image im = item.GetComponent<Image>();
+                Sprite p = Resources.Load<Sprite>("Itemsprite/" + num.ToString());
+                im.sprite = p;
+
+                item.name = Itemdateset.itemdate[num].show_name;               
             }
         }
         else
         {
-            
+
         }
     }
     public void close()
@@ -120,35 +100,43 @@ public class bagusing : MonoBehaviour
     }
     public void composite()
     {
-        if (player.comitem.Contains(player.itemdata[0]) && player.comitem.Contains(player.itemdata[1]))
+        for (int i = 1; i < Itemdateset.composition.Count - 1; i++)
         {
-            if (player.bg.I_name.Contains(player.itemdata[2].name) == true)
+            if (player.comitem.Contains(Itemdateset.itemdate[Itemdateset.composition[i].item1]) && player.comitem.Contains(Itemdateset.itemdate[Itemdateset.composition[i].item2]))
             {
-                int num = player.bg.I_name.IndexOf(player.itemdata[2].name);
-                player.bg.I_num[num]++;
+                if (player.bg.I_item.Contains(Itemdateset.itemdate[Itemdateset.composition[i].composition]) == true)
+                {
+                    int num = player.bg.I_item.IndexOf(Itemdateset.itemdate[Itemdateset.composition[i].composition]);
+                    player.bg.I_num[num]++;
+                }
+                else if (player.bg.I_item.Contains(Itemdateset.itemdate[Itemdateset.composition[i].composition]) == false)
+                {
+                    player.bg.I_item.Add(Itemdateset.itemdate[Itemdateset.composition[i].composition]);
+                    player.bg.I_num.Add(1);
+
+                    GameObject it = Instantiate(player.itemsource, GameObject.Find("itemcreat").transform);
+                    it.GetComponent<Itemset>().Item_id = Itemdateset.composition[i].composition;
+                    it.GetComponent<Itemset>().reset();
+                }
+
+                for (int a = 0; a < 2; a++)
+                {
+                    int n = player.bg.I_item.IndexOf(player.comitem[a]);
+                    player.bg.I_num[n]--;
+                }
             }
-            else if (player.bg.I_name.Contains(player.itemdata[2].name) == false)
+            else
             {
-                player.bg.I_name.Add(player.itemdata[2].name);
-                player.bg.I_num.Add(1);
-                Instantiate(player.itemdata[2], GameObject.Find("itemcreat").transform);
+                
             }
-        }
-        else
-        {
-            for (int i = 0; i < GameObject.Find("ct").transform.childCount; i++)
+            for (int a = 0; a < GameObject.Find("ct").transform.childCount; a++)
             {
-                GameObject go = GameObject.Find("ct").transform.GetChild(i).gameObject;
+                GameObject go = GameObject.Find("ct").transform.GetChild(a).gameObject;
                 Destroy(go);
             }
+
+            player.comitem.Clear();
         }
-        
-        for (int i = 0; i < GameObject.Find("ct").transform.childCount; i++)
-        {
-            GameObject go = GameObject.Find("ct").transform.GetChild(i).gameObject;
-            Destroy(go);
-        }
-        player.comitem.Clear();
     }
 }
 
