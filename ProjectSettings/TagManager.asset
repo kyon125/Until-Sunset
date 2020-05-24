@@ -8,6 +8,7 @@ TagManager:
   - item
   - pack
   - I_Potion
+  - K_item
   layers:
   - Default
   - TransparentFX

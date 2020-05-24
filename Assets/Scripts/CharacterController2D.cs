@@ -29,7 +29,7 @@ public class CharacterController2D : MonoBehaviour
     {
         Rigidbody = this.gameObject.GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
-        playerAni = GetComponent<Animator>();
+        playerAni =GameObject.Find("An(an)").GetComponent<Animator>();
 
         gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
     }
@@ -52,18 +52,18 @@ public class CharacterController2D : MonoBehaviour
             {
                 Walk = true;
 
-                playerS.localScale = new Vector2(0.1f, 0.1f);
+                //playerS.localScale = new Vector2(0.1f, 0.1f);
 
-                this.gameObject.transform.localScale = new Vector3(0.1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+                this.gameObject.transform.localScale = new Vector3(1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
                 Rigidbody.AddForce(new Vector2(20 * speed, 0), ForceMode2D.Impulse);
             }
             else if (Input.GetKey(KeyCode.LeftArrow) && isGrounded == true)
             {
                 Walk = true;
 
-                playerS.localScale = new Vector2(-0.1f, 0.1f);
+                //playerS.localScale = new Vector2(-0.1f, 0.1f);
 
-                this.gameObject.transform.localScale = new Vector3(-0.1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
+                this.gameObject.transform.localScale = new Vector3(-1f, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
                 Rigidbody.AddForce(new Vector2(-20 * speed, 0), ForceMode2D.Impulse);
             }
 
@@ -106,28 +106,30 @@ public class CharacterController2D : MonoBehaviour
 
     void run()
     {
-        bool Run = false;
+        //bool Run = false;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed_X = 12;
-            Run = true;
+            //Run = true;
+            playerAni.SetInteger("Run", 1);
         }
         else
         {
             speed_X = 8;
+            playerAni.SetInteger("Run", 0);
         }
 
-        if (Run)
-        {
-            if (playerAni.GetInteger("Run") == 0)
-                playerAni.SetInteger("Run", 1);
-        }
-        else
-        {
-            if (playerAni.GetInteger("Run") == 1)
-                playerAni.SetInteger("Run", 0);
-        }
+        //if (Run)
+        //{
+        //    if (playerAni.GetInteger("Run") == 0)
+        //        playerAni.SetInteger("Run", 1);
+        //}
+        //else
+        //{
+        //    if (playerAni.GetInteger("Run") == 1)
+        //        playerAni.SetInteger("Run", 0);
+        //}
     }
     void jump()
     {
