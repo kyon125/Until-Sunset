@@ -39,7 +39,6 @@ public class Itemset_Plot : MonoBehaviour
     void con_animation()
     {
         //播放道具動畫
-        animator.GetBool()
     }
 
     void getitem()

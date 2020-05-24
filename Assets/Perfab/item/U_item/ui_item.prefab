@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4477749345806868411}
   - component: {fileID: -8819619270387554090}
   m_Layer: 5
-  m_Name: testitem
+  m_Name: ui_item
   m_TagString: I_Potion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4477749345806868411}
-        m_MethodName: useitem
+        m_MethodName: select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

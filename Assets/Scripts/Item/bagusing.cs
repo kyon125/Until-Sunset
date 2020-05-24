@@ -11,6 +11,7 @@ public class bagusing : MonoBehaviour
     PlayerBag player;
     public GameObject com;
     private GameStatus gameStatus;
+    private int num_select;
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerBag>();
@@ -25,13 +26,13 @@ public class bagusing : MonoBehaviour
             print(player.bg.I_item[i].show_name +  player.bg.I_num[i]);
         }
     }
+    //道具的使用
     public void useitem()
     {
         gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
         if (gameStatus.status == GameStatus.Status.onBaging)
         {
-            int num = this.gameObject.GetComponent<Itemset>().Item_id;
-            switch (num)
+            switch (num_select)
             {
                 case (3):
                     print("ggg");
@@ -41,18 +42,18 @@ public class bagusing : MonoBehaviour
         }
         else if (gameStatus.status == GameStatus.Status.onComposition)
         {
-            int num = this.gameObject.GetComponent<Itemset>().Item_id;
+
             if (player.comitem.Count < 2)
             {
-                player.comitem.Add(Itemdateset.itemdate[num]);
+                player.comitem.Add(Itemdateset.itemdate[num_select]);
 
                 GameObject item = Instantiate(player.itemsource, GameObject.Find("ct").transform);
 
                 Image im = item.GetComponent<Image>();
-                Sprite p = Resources.Load<Sprite>("Itemsprite/" + num.ToString());
+                Sprite p = Resources.Load<Sprite>("Itemsprite/" + num_select.ToString());
                 im.sprite = p;
 
-                item.name = Itemdateset.itemdate[num].show_name;               
+                item.name = Itemdateset.itemdate[num_select].show_name;               
             }
         }
         else
@@ -62,23 +63,24 @@ public class bagusing : MonoBehaviour
     }
     public void close()
     {
-        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
-        switch (gameStatus.status)
-        {
-            case GameStatus.Status.onBaging:
-                {
-                    Destroy(GameObject.Find("P_pack"));
-                    gameStatus.status = GameStatus.Status.onPlaying;                    
-                    break;
-                }
-            case GameStatus.Status.onComposition:
-                {
-                    player.comitem.Clear();
-                    gameStatus.status = GameStatus.Status.onBaging;
-                    Destroy(GameObject.Find("P_com"));
-                    break;
-                }
-        }
+        Destroy(GameObject.Find("P_pack"));
+        //gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
+        //switch (gameStatus.status)
+        //{
+        //    case GameStatus.Status.onBaging:
+        //        {
+        //            Destroy(GameObject.Find("P_pack"));
+        //            gameStatus.status = GameStatus.Status.onPlaying;                    
+        //            break;
+        //        }
+        //    case GameStatus.Status.onComposition:
+        //        {
+        //            player.comitem.Clear();
+        //            gameStatus.status = GameStatus.Status.onBaging;
+        //            Destroy(GameObject.Find("P_com"));
+        //            break;
+        //        }
+        //}
     }
     public void B_composite()
     {
@@ -88,7 +90,7 @@ public class bagusing : MonoBehaviour
             case GameStatus.Status.onBaging:
                 {
                     gameStatus.status = GameStatus.Status.onComposition;
-                    Instantiate(com).name = "P_com";
+                    Destroy(GameObject.Find("I_block"));
                     print(gameStatus.status);
                     break;
                 }
@@ -97,6 +99,30 @@ public class bagusing : MonoBehaviour
                     break;
                 }
         }             
+    }
+    //選擇道具
+    public void select()
+    {
+        num_select = this.gameObject.GetComponent<Itemset>().Item_id;
+
+        gameStatus = GameObject.Find("GameController").GetComponent<GameStatus>();
+
+        if (gameStatus.status == GameStatus.Status.onComposition)
+        {
+
+            if (player.comitem.Count < 2)
+            {
+                player.comitem.Add(Itemdateset.itemdate[num_select]);
+
+                GameObject item = Instantiate(player.itemsource, GameObject.Find("ct").transform);
+
+                Image im = item.GetComponent<Image>();
+                Sprite p = Resources.Load<Sprite>("Itemsprite/" + num_select.ToString());
+                im.sprite = p;
+
+                item.name = Itemdateset.itemdate[num_select].show_name;
+            }
+        }
     }
     public void composite()
     {
@@ -129,6 +155,7 @@ public class bagusing : MonoBehaviour
             {
                 
             }
+
             for (int a = 0; a < GameObject.Find("ct").transform.childCount; a++)
             {
                 GameObject go = GameObject.Find("ct").transform.GetChild(a).gameObject;

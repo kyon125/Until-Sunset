@@ -81,7 +81,6 @@ public class WellPlot1 : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
         contentext.text = "";
-        GameObject.Find("shine").GetComponent<SpriteRenderer>().enabled = true;
         gameStatus.status = GameStatus.Status.onPlaying;
         GameObject.Find("mid_straw").GetComponent<SpriteRenderer>().sortingOrder = 1;
         GameObject.Find("mid_straw2").GetComponent<SpriteRenderer>().sortingOrder = 1;
