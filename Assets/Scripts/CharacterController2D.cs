@@ -136,7 +136,7 @@ public class CharacterController2D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded == true)
         {
             playerAni.SetBool("JumpUp", true);
-            Rigidbody.AddForce(new Vector2(0, jumpspeed), ForceMode2D.Impulse);
+            Rigidbody.AddForce(new Vector2(0, 10 * jumpspeed), ForceMode2D.Impulse);
         }
         else
         {

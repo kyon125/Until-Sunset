@@ -9,6 +9,8 @@ TagManager:
   - pack
   - I_Potion
   - K_item
+  - trap
+  - Water_flat
   layers:
   - Default
   - TransparentFX
